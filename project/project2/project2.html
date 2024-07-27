@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mon Portfolio</title>
+    <link rel="stylesheet" href="../../styles.css">
+    <script src="../../script/scripts.js" defer></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.25.0/themes/prism-okaidia.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.25.0/prism.min.js" defer></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.25.0/components/prism-python.min.js" defer></script>
+    <style>
+        .framecs {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            height: 100%;
+            width: 100%;
+        }
+
+        iframe {
+            width: 50%;
+            height: 500px;
+            border: none;
+            box-shadow: 0px 0px 60px 5px rgba(184, 120, 184, 0.52)
+        }
+        #selected {
+            color: blue;
+        }
+    </style>
+    </style>
+</head>
+
+<body>
+    <header>
+        <nav>
+            <div class="returnBow"><a href="../../index.html#projects" class="arrowReturn"><i class="bi bi-arrow-left-circle"></i></a></div>
+            <ul>
+                <li><a class=".smooth-scroll" href="../project1.html">Huffman</a></li>
+                <li><a class=".smooth-scroll" id="selected">ToDoList</a></li>
+                <li><a class=".smooth-scroll" href="../project3.html">Jeux WEB</a></li>
+                <li><a class=".smooth-scroll" href="../project4.html">Plugin Minecraft</a></li>
+            </ul>
+            <div><i class="bi bi-brightness-high-fill" id="toggleDark"></i></div>
+        </nav>
+    </header>
+    <!-- Sections du site -->
+    <section id="homeone">
+        <h1>ToDoList</h1>
+        <h2>Introduction</h2>
+        <p>Dans cet article, nous allons explorer la création d'une application TodoList en JavaScript, en utilisant des
+            fonctionnalités modernes telles que les modules ES6, les classes, et les appels API. Voici un guide détaillé
+            pour comprendre le code derrière notre TodoList.</p>
+    </section>
+    <section class="framecs">
+        <h2>Apercu du code</h2>
+        <iframe src="toDoList/index.html"> </iframe>
+    </section>
+    <section id="homeone">
+        <h2>Initialisation de l'Application </h2>
+        <p>Ce fichier initialise l'application en récupérant les données en JSON sur la plateforme <a
+                href="https://jsonplaceholder.typicode.com/todos?_limit=5">jsonplaceholder</a> ensuite je crée une
+            instance de TodoList.</p>
+        <pre>
+            <code class="language-javascript">
+                // Importe les différentes fonctions nécessaire qu'on verra plutard
+                import { fetchJSON } from "./functions/api.js"
+                import { createElement } from "./functions/dom.js"
+                import { TodoList } from "./components/TodoList.js"
+
+                try {
+                    // Utilise fetchJSON pour récupérer des tâches depuis une API
+                    const todos = await fetchJSON('https://jsonplaceholder.typicode.com/todos?_limit=5')
+                    // Crée une instance de TodoList avec les tâches récupérées
+                    const list = new TodoList(todos)
+                    // Ajoute la TodoList à l'élément HTML avec l'ID 'todolist'
+                    list.appendTo(document.querySelector('#todolist'))
+                } catch (e) {
+                    // En cas d'erreur, crée un élément div pour afficher un message d'alerte
+                    const AlertElement = createElement('div', {
+                        class: 'alert alert-danger m-2',// Ajoute des classes Bootstrap pour le style
+                        role: 'alert'
+                    });
+                    // Définit le texte du message d'alerte
+                    AlertElement.innerText = 'Impossible de charger les éléments'
+                    // Insère le message d'alerte en haut de la page
+                    document.body.prepend(AlertElement)
+                    console.error(e)
+                }
+            </code>
+        </pre>
+    </section>
+    <section id="homeone">
+        <h2>Création d'Éléments DOM</h2>
+        <p>Ce fichier contient une fonction utilitaire pour créer des éléments DOM avec des attributs spécifiés.</p>
+        <pre>
+            <code class="language-javascript">
+                * @param {string} tagName
+                /**
+                * @returns {HTMLElement}
+                */
+                export function createElement(tagName, attributes = {}) {
+                    // Crée un nouvel élément HTML avec le nom de balise spécifié
+                    const element = document.createElement(tagName)
+                    // Parcourt les paires clé-valeur de l'objet attributes
+                    for (const [attribute, value] of Object.entries(attributes)) {
+                        // Vérifie si la valeur de l'attribut n'est pas null
+                        if (value !== null) {
+                            // Définit l'attribut de l'élément avec la clé et la valeur spécifiées
+                            element.setAttribute(attribute, value)
+                        }
+                    }
+                    // Retourne l'élément HTML créé
+                    return element
+                }
+                * @param {object} attributes
+            </code>
+        </pre>
+    </section>
+    <section id="homeone">
+        <h2>Gestion des Appels API</h2>
+        <p>Ce code définit une fonction JavaScript asynchrone nommée fetchJSON qui permet de récupérer des données JSON à partir d'une URL donnée.</p>
+        <pre>
+            <code class="language-javascript">
+                export async function fetchJSON(url, options= {}) {
+                    const headers = { Accept: 'application/json', ...options.headers };
+                    // Crée un objet d'en-têtes en fusionnant les en-têtes par défaut avec ceux fournis dans les options
+                    
+                    const r = await fetch(url, { ...options, headers })
+                    // Effectue la requête fetch avec l'URL et les options, incluant les en-tête
+                    
+                    if (r.ok) {
+                        // Si la réponse est correcte (code de statut HTTP entre 200 et 299)
+                        return r.json();
+                        // Retourne la réponse JSON
+                    }
+                    throw new Error('Erreur serveur', { cause: r })
+                    // Si la réponse n'est pas correcte, lance une erreur avec un message et la réponse comme cause
+                }
+            </code>
+        </pre>
+    </section>
+    <section id="homeone">
+        <h2>Gestion de la Liste de Tâches</h2>
+        <p>Ce fichier contient les classes TodoList et TodoListItem pour gérer la liste de tâches.<br><br><br>
+
+            TodoList : Gère l'ensemble des tâches et les interactions de l'utilisateur.<br><br>
+            TodoListItem : Représente une tâche individuelle.</p>
+            <br>
+        <pre>
+            <code class="language-javascript">
+                /**
+                * @typedef {object} Todo
+                * @property {number} id - L'identifiant unique de la tâche.
+                * @property {string} title - Le titre ou la description de la tâche.
+                * @property {boolean} completed - Indique si la tâche est terminée ou non.
+                */
+               import { createElement } from "../functions/dom.js";
+               
+               export class TodoList {
+                   #todos = [] // Déclaration du champ privé pour stocker les tâches
+                   #listElement = [] // Déclaration du champ privé pour l'élément HTML de la liste
+               
+                   /**
+                    * Constructeur de la classe TodoList.
+                    * @param {Todo[]} todos - Liste des tâches.
+                    */
+                   constructor(todos) {
+                       this.#todos = todos
+                   }
+               
+                   /**
+                    * Ajoute la TodoList à un élément HTML spécifié.
+                    * @param {HTMLElement} element - L'élément HTML auquel ajouter la TodoList.
+                    */
+                   appendTo(element) {
+                       // Définit le contenu HTML de base pour le formulaire et les boutons de filtre.
+                       element.innerHTML = `form class="d-flex pb-4">
+                           input required="" class="form-control" type="text" placeholder="Acheter des patates..." name="title" data-com.bitwarden.browser.user-edited="yes">
+                           button class="btn btn-primary">Ajouter/button>
+                       /form>
+                       main>
+                           div class="btn-group mb-4" role="group">
+                               button type="button" class="btn btn-outline-primary active" data-filter="all">Toutes/button>
+                               button type="button" class="btn btn-outline-primary" data-filter="todo">A faire/button>
+                               button type="button" class="btn btn-outline-primary" data-filter="done">Faites/button>
+                           /div>
+               
+                           ul class="list-group">
+                           /ul>
+                       /main>`
+                       
+                       // Référence l'élément de la liste de tâches.
+                       this.#listElement = element.querySelector('.list-group')
+                       
+                       // Ajoute chaque tâche à la liste.
+                       for (let todo of this.#todos) {
+                           const t = new TodoListItem(todo)
+                           this.#listElement.append(t.element)
+                       }
+               
+                       // Ajoute des gestionnaires d'événements pour le formulaire et les boutons de filtre.
+                       element.querySelector('form').addEventListener('submit', e => this.#onSubmit(e))
+                       element.querySelectorAll('.btn-group button').forEach(button => {
+                           button.addEventListener('click', e => this.#toggleFilter(e))
+                       })
+                   }
+               
+                   /**
+                    * Gère la soumission du formulaire pour ajouter une nouvelle tâche.
+                    * @param {Event} e - L'événement de soumission du formulaire.
+                    */
+                   #onSubmit(e) {
+                       e.preventDefault()
+                       const form = e.currentTarget
+                       const title = new FormData(e.currentTarget).get('title').toString().trim()
+                       
+                       // Vérifie si le titre de la tâche est vide.
+                       if (title === '') {
+                           return
+                       }
+               
+                       // Crée un nouvel objet de tâche.
+                       const todo = {
+                           id: Date.now(),
+                           title,
+                           completed: false
+                       }
+               
+                       // Crée un nouvel élément de tâche et l'ajoute au début de la liste.
+                       const item = new TodoListItem(todo)
+                       this.#listElement.prepend(item.element)
+                       form.reset() // Réinitialise le formulaire.
+                   }
+               
+                   /**
+                    * Gère le filtrage des tâches en fonction de leur état (toutes, à faire, faites).
+                    * @param {Event} e - L'événement de clic sur un bouton de filtre.
+                    */
+                   #toggleFilter(e) {
+                       e.preventDefault()
+                       const filter = e.currentTarget.getAttribute('data-filter')
+                       
+                       // Change l'état actif du bouton de filtre.
+                       e.currentTarget.parentElement.querySelector('.active').classList.remove('active')
+                       e.currentTarget.classList.add('active')
+               
+                       // Applique les classes de filtrage en fonction du bouton cliqué.
+                       if (filter === 'todo') {
+                           this.#listElement.classList.add('hide-completed')
+                           this.#listElement.classList.remove('hide-todo')
+                       } else if (filter === 'done') {
+                           this.#listElement.classList.add('hide-todo')
+                           this.#listElement.classList.remove('hide-completed')
+                       } else {
+                           this.#listElement.classList.remove('hide-todo')
+                           this.#listElement.classList.remove('hide-completed')
+                       }
+                   }
+               }
+               
+               class TodoListItem {
+               
+                   #element
+               
+                   /**
+                    * Constructeur de la classe TodoListItem.
+                    * @param {Todo} todo - La tâche représentée par cet élément.
+                    */
+                   constructor(todo) {
+                       const id = `todo-${todo.id}`
+                       const li = createElement('li', {
+                           class: 'todo list-group-item d-flex align-items-center'
+                       })
+                       this.#element = li
+                       
+                       // Crée et configure l'élément checkbox.
+                       const checkbox = createElement('input', {
+                           type: 'checkbox',
+                           class: 'form-check-input',
+                           id,
+                           checked: todo.completed ? '' : null
+                       })
+                       li.append(checkbox)
+                       
+                       // Crée et configure l'élément label.
+                       const label = createElement('label', {
+                           class: 'ms-2 form-check-label',
+                           for: 'id'
+                       })
+                       label.innerText = todo.title
+                       li.append(label)
+                       
+                       // Crée et configure le bouton de suppression.
+                       const button = createElement('button', {
+                           class: 'ms-auto btn btn-danger btn-sm'
+                       })
+                       button.innerHTML = 'i class="bi-trash">/i>'
+                       li.append(checkbox)
+                       li.append(label)
+                       li.append(button)
+                       
+                       // Applique l'état de complétion de la tâche.
+                       this.toggle(checkbox)
+               
+                       // Ajoute les gestionnaires d'événements pour la suppression et le changement d'état.
+                       button.addEventListener('click', e => this.remove(e))
+                       checkbox.addEventListener('change', e => this.toggle(e.currentTarget))
+                   }
+               
+                   /**
+                    * Obtient l'élément HTML représentant la tâche.
+                    * @returns {HTMLElement} - L'élément HTML de la tâche.
+                    */
+                   get element() {
+                       return this.#element
+                   }
+               
+                   /**
+                    * Supprime l'élément de la tâche du DOM.
+                    * @param {Event} e - L'événement de clic sur le bouton de suppression.
+                    */
+                   remove(e) {
+                       e.preventDefault()
+                       this.#element.remove()
+                   }
+               
+                   /**
+                    * Bascule l'état de la tâche (complétée ou non).
+                    * @param {HTMLInputElement} checkbox - La case à cocher associée à la tâche.
+                    */
+                   toggle(checkbox) {
+                       if (checkbox.checked) {
+                           this.#element.classList.add('is-completed')
+                       } else {
+                           this.#element.classList.remove('is-completed')
+                       }
+                   }
+               }
+               
+            </code>
+        </pre>    
+    </section>
+</html>
