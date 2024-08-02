@@ -3,8 +3,7 @@ import { createElement } from "./functions/dom.js"
 import { TodoList } from "./components/TodoList.js"
 
 try {
-    //const todos = await fetchJSON('https://jsonplaceholder.typicode.com/todos?_limit=5')
-    const todos = []
+    const todos = await fetchJSON('https://jsonplaceholder.typicode.com/todos?_limit=5')
     const list = new TodoList(todos)
     // Crée une instance de TodoList avec les tâches récupérées
     list.appendTo(document.querySelector('#todolist'))
