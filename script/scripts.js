@@ -134,7 +134,7 @@ document.addEventListener("DOMContentLoaded", function () {
     })
 })
 
-const profilePhoto = document.getElementById('profile-photo')
+/*const profilePhoto = document.getElementById('profile-photo')
 window.addEventListener('scroll', function () {
     const scrollPosition = window.scrollY
     const maxScroll = 200 
@@ -148,21 +148,34 @@ window.addEventListener('scroll', function () {
         profilePhoto.style.height = `${minSize}px`
         profilePhoto.style.width = `${minSize}px`
     }
-})
+})*/
 
 const observer = new IntersectionObserver((entries) => {
     for (const entry of entries) {
         if (entry.isIntersecting) {
             entry.target.animate([
-                {opacity: 0},
-                {opacity: 1}
+                { opacity: 0 },
+                { opacity: 1 }
             ], {
                 duration: 700
             });
         }
     }
-})
+});
 
-const targets = document.querySelectorAll('.skills-category')
-targets.forEach((target) => observer.observe(target))
-observer.observe(document.getElementById('skills'))
+
+const allTargets = [
+    ...document.querySelectorAll('.skills-category'),
+    ...document.querySelectorAll('.project'),
+    document.getElementById('skills'),
+    document.getElementById('proCv'),
+    document.getElementById('projects'),
+    document.getElementById('home'),
+    document.getElementById('contact')
+]
+
+allTargets.forEach((target) => {
+    if (target) { 
+        observer.observe(target)
+    }
+})
