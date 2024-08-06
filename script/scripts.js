@@ -149,3 +149,20 @@ window.addEventListener('scroll', function () {
         profilePhoto.style.width = `${minSize}px`
     }
 })
+
+const observer = new IntersectionObserver((entries) => {
+    for (const entry of entries) {
+        if (entry.isIntersecting) {
+            entry.target.animate([
+                {opacity: 0},
+                {opacity: 1}
+            ], {
+                duration: 700
+            });
+        }
+    }
+})
+
+const targets = document.querySelectorAll('.skills-category')
+targets.forEach((target) => observer.observe(target))
+observer.observe(document.getElementById('skills'))
