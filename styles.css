@@ -1,4 +1,26 @@
 /* styles.css */
+
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed, 
+figure, figcaption, footer, header, hgroup, 
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	font-size: 100%;
+	font: inherit;
+	vertical-align: baseline;
+}
+
 html {
     scroll-behavior: smooth;
     color: #161616e3;
@@ -86,17 +108,23 @@ nav i:hover {
 }
 /* PRESENTATION */
 #home {
-    margin-top: 5%;
+    width: 100vw;
+    height: 86vh;
+    margin-top: 7%;
     padding-left: 11%;
 }
 
 #home h1 {
+    margin-top: 2%;
     font-size: 50px;
+    font-weight: 700;
 }
 
 #home p {
-    color: #585858;
-    font-size: 23px;
+    color: #949494;
+    margin-top: 2%;
+    font-size: 25px;
+    letter-spacing: 2px;
 }
 #profile-photo {
     border-radius: 50%;
@@ -108,22 +136,19 @@ nav i:hover {
 
 /* principal */
 .proCv {
-    padding-top: 7%;
     display: flex;
     justify-content: space-around;
     align-items: center;
     flex-wrap: wrap;
 }
-/* fin */
+
 /* CV PROJECT */
 .project {
-    padding-top: 5px;
     padding-bottom: 10px;
     height: auto;
     margin-left: 6px;
-    padding-left: 20px;
-    padding-right: 15px;
     margin-top: 20px;
+    padding: 30PX;
     margin: 70px;
     width: 700px;
     border-radius: 20px;
@@ -173,6 +198,7 @@ nav i:hover {
     color: #a1a1a1;
 }
 .CV {
+    padding-bottom: 30px;
     padding-top: 5px;
     height: auto;
     width: 320px;
@@ -220,6 +246,7 @@ nav i:hover {
 /* compétence */
 #skills {
     padding: 3rem 2rem;
+    height: 100vh;
 }
 
 #skills h2, #skills p{
@@ -228,15 +255,19 @@ nav i:hover {
 }
 #skills h2{
     font-size: 50px;
+    font-weight: 700;
 }
 
 #skills p{
-    padding-bottom: 1%;
+    color: #949494;
+    letter-spacing: 2px;
+    margin-top: 2%;
     padding-top: 2%;
-    font-size: 23px;
+    font-size: 25px;
 }
 
 .skills-container {
+    margin-top: 6%;
     display: flex;
     align-items: center;
     flex-direction: column;
@@ -249,6 +280,7 @@ nav i:hover {
 }
 
 .skills-category {
+    margin: 30px;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -256,7 +288,13 @@ nav i:hover {
     padding: 1rem;
     border: solid rgba(184,120,184,1) 2px;
     box-shadow: inset 0px 0px 41px 1px rgba(184,120,184,1),0px 0px 41px 1px rgba(184,120,184,0.52);
-    
+}
+
+.skills-category H3{
+    margin-bottom: 4%;
+    margin-top: 3%;
+    font-size: 20px;
+    font-weight: 55=2=40;
 }
 
 .skills-icons {
@@ -469,6 +507,20 @@ footer {
     }
 }
 @media (max-width: 821px) {
+
+    #homeone {
+        width: 100%;
+        padding: 0;
+    } 
+    #homeone h1{
+        padding-left: 5px;
+    } 
+    #homeone h2{
+        padding-left: 10px;
+    } 
+    #homeone p{
+        padding-left: 15px;
+    } 
     body {
         padding: 0;
         margin: 0;
@@ -555,10 +607,10 @@ footer {
     #profile-photo {
         align-self: center;
         border-radius: 50%;
-        height: 110px;
-        width: 110px;
-        box-shadow: 0px 0px 41px 1px rgba(184,120,184,0.52);
-        transition: height 0.3s ease, width 0.3s ease;
+        height: 5px;
+        width: 5px;
+        box-shadow: none;
+
     }
 
     /* principal */
@@ -568,7 +620,6 @@ footer {
         justify-content: center; 
         flex-wrap: wrap;
         max-width: 100%;
-        padding-left: 10px;
     }
     /* CV PROJECT */
     .project {
