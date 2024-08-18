@@ -106,7 +106,7 @@ header {
 }
 @supports not (backdrop-filter: blur(9px)) {
     .burger-menu {
-        background: rgba(0, 0, 0, 0.9); /* A solid background as a fallback */
+        background: rgba(0, 0, 0, 0.7); /* A solid background as a fallback */
     }
 }
 .burger-menu-open {
