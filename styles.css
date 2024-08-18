@@ -94,8 +94,6 @@ header {
     background: #a0a0a015; /* I found this color of blur to work for me better*/
     -webkit-backdrop-filter: blur(5px); /* Add this line first, it fixes blur for Safari*/
     backdrop-filter: blur(5px);  /* This line activates blur*/
-    margin-top: 33px; /*just gap from top part of screen, don't really need it */
-    position: fixed; /*makes blurred menu fixed on screen when it's scrolled up-down*/
     z-index: 9; /*makes blur above everything, number can be higher if you have many layers*/
     overflow: hidden;
     border-radius: 10px;
