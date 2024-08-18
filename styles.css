@@ -1,5 +1,10 @@
 /* General resets */
-
+@supports ((-webkit-backdrop-filter: blur(10px)) or (backdrop-filter: blur(10px))) {
+    .burger-menu {
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+    }
+}
 .inter-<uniquifier> {
     font-family: "Inter", sans-serif;
     font-optical-sizing: auto;
