@@ -1,0 +1,543 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ToDoList - Développement WEB</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        @import url('//fonts.googleapis.com/css?family=Roboto:500');
+
+        @import url('//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css');
+
+
+        body,
+        html {
+            margin: 0;
+            padding: 0;
+            font-family: 'Inter', sans-serif;
+            color: #E8E9F8;
+            height: 100%;
+            scroll-behavior: smooth;
+        }
+
+        /* Project Details Section */
+        .project-details {
+            padding: 50px 60px;
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            gap: 20px;
+        }
+
+        header,
+        .navbar {
+            border: none;
+            /* Assurez-vous qu'aucune bordure n'est appliquée */
+            box-shadow: none;
+            /* Désactivez les ombres */
+            margin: 0;
+            /* Réduisez les marges si nécessaire */
+            padding: 1.5rem 0;
+            /* Assurez-vous qu'il n'y a pas de padding non désiré */
+
+        }
+
+        .back-button {
+            flex-shrink: 0;
+            text-align: center;
+        }
+
+        .back-button a img {
+            top: 200px;
+            left: 50px;
+            position: absolute;
+            width: 50px;
+            background-color: #07104A;
+            padding: 10px;
+            border-radius: 50%;
+        }
+
+        .back-button a img:hover {
+            border: solid 1px #132bcc;
+            color: #fff;
+        }
+
+        .content {
+            width: 40%;
+            margin-left: 5%;
+        }
+
+        .content h3 {
+            font-size: 24px;
+            color: #CECBCB;
+            margin-bottom: 10px;
+        }
+
+        .content h1 {
+            font-size: 64px;
+            margin-bottom: 20px;
+            color: white;
+        }
+
+        .content p {
+            width: 100%;
+            font-size: 18px;
+            line-height: 1.5;
+            margin-bottom: 40px;
+            word-wrap: break-word;
+        }
+
+        .technologies {
+            margin-top: 40px;
+            display: flex;
+            align-items: center;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .technologies h4 {
+            font-size: 34px;
+            margin-bottom: 5%;
+        }
+
+        .technologies img {
+            margin-right: 10px;
+            width: 90px;
+            height: 90px;
+        }
+
+        .technologies div {
+            display: flex;
+            flex-wrap: nowrap;
+        }
+
+        .second-nav {
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Dark/Light Toggle Styles */
+        .dark-light-toggle {
+            position: fixed;
+            left: 20px;
+            top: 50%;
+            transform: translateY(0%);
+            z-index: 1000;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .switch {
+            position: relative;
+            display: inline-block;
+            width: 30px;
+            height: 60px;
+        }
+
+        .switch input {
+            display: none;
+        }
+
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background-color: #ccc;
+            transition: .4s;
+            border-radius: 30px;
+        }
+
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 22px;
+            width: 22px;
+            left: 4px;
+            bottom: 4px;
+            background-color: white;
+            transition: .4s;
+            border-radius: 50%;
+        }
+
+        input:checked+.slider {
+            background-color: #A9A9A9;
+        }
+
+        input:checked+.slider:before {
+            transform: translateY(-30px);
+        }
+
+        .label-top {
+            font-size: 14px;
+            color: #E8E9F8;
+        }
+
+        .label-bottom {
+            font-size: 14px;
+            color: #E8E9F8;
+            opacity: 0;
+        }
+
+        input:checked+.slider+.label-bottom {
+            opacity: 1;
+        }
+
+        input:checked+.slider+.label-top {
+            opacity: 0;
+        }
+
+        /* Media Queries */
+        @media (max-width: 768px) {
+            .dark-light-toggle {
+                position: relative;
+                left: 22rem;
+                right: 3rem;
+                top: 25%;
+                transform: translateY(-50%);
+                z-index: 1000;
+                display: flex;
+                flex-direction: row;
+                /* Aligner les éléments horizontalement */
+                align-items: center;
+                gap: 10px;
+            }
+
+            .back-button {
+                margin-top: 2%;
+                flex-shrink: 0;
+                text-align: left;
+            }
+
+            .back-button a img {
+                top: 20%;
+                left: 20px;
+                position: relative;
+                width: 40px;
+                background-color: #07104A;
+                padding: 10px;
+                border-radius: 50%;
+            }
+
+            .switch {
+                position: relative;
+                display: inline-block;
+                width: 60px;
+                /* Largeur plus grande pour le bouton horizontal */
+                height: 30px;
+                /* Hauteur réduite pour le bouton horizontal */
+            }
+
+            input:checked+.slider:before {
+                transform: translateX(30px);
+                /* Déplace le cercle vers la droite */
+            }
+
+            .project-details {
+                margin: 0;
+                padding: 0;
+                flex-direction: column;
+                text-align: left;
+            }
+
+            .content {
+            width: 0;
+            margin-left: 5%;
+        }
+
+        .content h3 {
+            font-size: 1.5rem;
+            color: #CECBCB;
+            margin-bottom: 10px;
+        }
+
+        .content h1 {
+            font-size: 3rem;
+            margin-bottom: 20px;
+            color: white;
+        }
+
+        .content p {
+            width: 300px;
+            font-size: 18px;
+            line-height: 1.5;
+            margin-bottom: 40px;
+            word-wrap: break-word;
+        }
+
+        .technologies {
+            margin-top: 40px;
+            display: flex;
+            align-items: center;
+            flex-direction: column;
+            margin-right: -380px;
+        }
+
+        .technologies h4 {
+            text-align: center;
+            font-size: 1.5rem;
+            margin-bottom: 5%;
+        }
+
+        .technologies img {
+            margin-right: 10px;
+            width: 88px;
+            height: 88px;
+        }
+
+        .technologies div {
+            display: flex;
+            flex-wrap: wrap;
+        }
+        .img-div {
+            width: 360px;
+            border: 5PX solid #847777;
+        }
+        }
+
+        @media (max-width: 490px) {
+
+            .back-button a img {
+                top: 26%;
+                left: 20px;
+                position: relative;
+                width: 30px;
+                background-color: #07104A;
+                padding: 10px;
+                border-radius: 50%;
+            }
+
+            .dark-light-toggle {
+                position: relative;
+                left: 12rem;
+                right: 3rem;
+                margin-top: -30px;
+                transform: translateY(-50%);
+                z-index: 1000;
+                display: flex;
+                flex-direction: row;
+                /* Aligner les éléments horizontalement */
+                align-items: center;
+                gap: 10px;
+            }
+
+            iframe {
+                width: 100%;
+                height: 480px;
+                border: none;
+                background-color: #ffffff;
+            }
+
+
+        }
+
+        .face-button {
+            height: auto;
+            display: inline-block;
+            height: 48px;
+            font-family: 'Roboto', sans-serif;
+            font-weight: 500;
+            text-align: center;
+            text-decoration: none;
+            color: rgb(13, 25, 101);
+            overflow: hidden;
+            margin-bottom: 5%;
+        }
+
+        .face-button .icon {
+            margin-right: 6px;
+        }
+
+        .face-button .face-primary,
+        .face-button .face-secondary {
+            display: block;
+            padding: 0 32px;
+            border: 1px solid rgb(13, 25, 101);
+            line-height: 64px;
+            transition: margin 0.4s;
+        }
+
+        .face-button .face-primary {
+            background-color: rgb(13, 25, 101);
+            color: #fff;
+        }
+
+        .face-button:hover .face-primary {
+            margin-top: -64px;
+        }
+
+        .img-div {
+            width: 110%;
+            border: 5PX solid #847777;
+        }
+        .Downloadeur{
+            margin-right: 5%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+</head>
+
+<body>
+    <header>
+        <div class="navbar">
+            <a href="#" class="logo" style="color: 98A3DD; text-decoration: none;">IhabBourgi</span><span
+                    style="color: #E8E9F8;">.</span><span style="color: #DF0D0D">_</a>
+            <ul class="links">
+                <li><a href="index.html#home">// Accueil</a></li>
+                <li><a href="index.html#target-section">// Compétence</a></li>
+                <li><a href="index.html#work">// Projet</a></li>
+                <li><a href="index.html#experience">// Formation</a></li>
+                <li><a href="index.html#contact">// Contact</a></li>
+            </ul>
+            <div class="burger-menu-button">
+                <i class="fa-solid fa-bars"></i>
+            </div>
+        </div>
+        <div class="burger-menu">
+            <ul class="links">
+                <li><a href="index.html#home">// Accueil</a></li>
+                <li><a href="index.html#target-section">// Compétence</a></li>
+                <li><a href="index.html#work">// Projet</a></li>
+                <li><a href="index.html#experience">// Formation</a></li>
+                <li><a href="index.html#contact">// Contact</a></li>
+            </ul>
+        </div>
+    </header>
+    <div class="second-nav">
+        <div class="back-button">
+            <a href="index.html#cardr"><img src="img/path/arrow.png" alt="Retour"></a>
+        </div>
+        <div class="dark-light-toggle">
+            <label style="background-color: none;" class="label-top">Light Mode</label>
+            <label class="switch">
+                <input type="checkbox" id="theme-toggle">
+                <span class="slider"></span>
+            </label>
+        </div>
+    </div>
+    <section class="project-details">
+        <div class="content">
+            <h3>Développement SoftWare</h3>
+            <h1>Compresseur de donnée HuffMan</h1>
+            <p>
+                Ce projet universitaire met en œuvre l'algorithme de compression Huffman, démontrant ma capacité à
+                appliquer des concepts avancés de traitement des données pour optimiser le stockage et la transmission
+                d'informations.
+            </p>
+            <hr>
+            <div class="technologies">
+                <h4>Technologies</h4>
+                <div>
+                    <img style="filter: none;border-radius: 25px;" src="img/path/python.png" alt="App Name">
+                </div>
+            </div>
+        </div>
+        <div class="Downloadeur">
+            <a class="face-button" href="src/huffman.rar">
+
+                <div class="face-primary">
+                    <span class="icon fa fa-cloud"></span>
+                    Download
+                </div>
+
+                <div class="face-secondary">
+                    <span class="icon fa fa-hdd-o"></span>
+                    Size: 1,88 Ko
+                </div>
+
+            </a>
+            <img class="img-div" src="img/Capture3.PNG">
+        </div>
+    </section>
+
+    <script>
+        // JavaScript pour changer le thème
+        const toggleSwitch = document.getElementById('theme-toggle');
+        const body = document.body;
+        const elementsToChange = document.querySelectorAll('h3,h1, .project-details, .content, .technologies, .iframe-container, .dark-light-toggle');
+        const img = document.querySelectorAll('img');
+        const labelbot = document.querySelector('.label-top');
+
+        // Fonction pour appliquer le thème
+        function applyTheme(theme) {
+            if (theme === 'light') {
+                toggleSwitch.checked = true;
+                body.style.backgroundColor = '#E8E9F8';
+                elementsToChange.forEach(element => {
+                    element.style.color = '#131313';
+                });
+                img.forEach(element => {
+                    element.style.filter = 'invert(100%)';
+                });
+                labelbot.textContent = "Light Mode";
+                labelbot.style.color = "#131313";
+            } else {
+                toggleSwitch.checked = false;
+                body.style.backgroundColor = 'rgb(13, 25, 101)';
+                elementsToChange.forEach(element => {
+                    element.style.color = '#E8E9F8';
+                });
+                img.forEach(element => {
+                    element.style.filter = 'invert(0%)';
+                });
+                labelbot.textContent = "Dark Mode";
+                labelbot.style.color = "#E8E9F8";
+            }
+        }
+
+        // Vérifier le thème stocké au chargement de la page
+        const storedTheme = localStorage.getItem('theme') || 'dark';
+        applyTheme(storedTheme);
+
+        // Écouter les changements de thème
+        toggleSwitch.addEventListener('change', function () {
+            const theme = this.checked ? 'light' : 'dark';
+            applyTheme(theme);
+            // Sauvegarder le thème choisi dans le localStorage
+            localStorage.setItem('theme', theme);
+        });
+
+        const burgerMenuButton = document.querySelector('.burger-menu-button');
+        const burgerMenuButtonIcon = document.querySelector('.burger-menu-button i');
+        const burgerMenu = document.querySelector('.burger-menu');
+        const links = document.querySelectorAll('.burger-menu .links a');
+
+        // Fonction pour ouvrir/fermer le menu
+        function toggleMenu() {
+            burgerMenu.classList.toggle('burger-menu-open');
+            const isOpen = burgerMenu.classList.contains('burger-menu-open');
+            burgerMenuButtonIcon.classList = isOpen ? 'fa-solid fa-xmark' : 'fa-solid fa-bars';
+        }
+
+        // Ferme le menu quand on clique sur un lien
+        links.forEach(link => {
+            link.addEventListener('click', function () {
+                burgerMenu.classList.remove('burger-menu-open');
+                burgerMenuButtonIcon.classList = 'fa-solid fa-bars';
+            });
+        });
+
+        // Ferme le menu quand on clique en dehors du menu
+        document.addEventListener('click', function (event) {
+            if (!burgerMenu.contains(event.target) && !burgerMenuButton.contains(event.target)) {
+                burgerMenu.classList.remove('burger-menu-open');
+                burgerMenuButtonIcon.classList = 'fa-solid fa-bars';
+            }
+        });
+
+        // Attache l'événement click au bouton du menu
+        burgerMenuButton.onclick = toggleMenu;
+    </script>
+</body>
+
+</html>
