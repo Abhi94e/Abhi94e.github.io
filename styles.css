@@ -79,7 +79,17 @@ header {
 .burger-menu-button {
     margin-top: -25px;
 }
-
+.burger-menu::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: inherit;
+    filter: blur(10px);
+    z-index: -1; /* Assurez-vous que le pseudo-élément reste derrière le contenu */
+}
 .burger-menu {
     display: none;
     position: absolute;
