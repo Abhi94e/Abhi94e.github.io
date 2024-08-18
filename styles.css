@@ -638,6 +638,9 @@ header {
     .expertise-item:first-child {
         border: 4px solid #9799AC
     }
+    .burger-menu {
+    background: rgba(255, 255, 255, 0.8); /* Couleur blanche semi-transparente */
+    }
     .logo {
         font-size: 3rem;
         margin-bottom: 5%;
