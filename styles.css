@@ -97,7 +97,7 @@ header {
     background: #00000036;
     backdrop-filter: blur(5px);
     backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px); /* Préfixe pour Safari */
+    -webkit-backdrop-filter: blur(10px); 
     overflow: hidden;
     border-radius: 10px;
     transition: height 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
@@ -637,9 +637,6 @@ header {
 
     .expertise-item:first-child {
         border: 4px solid #9799AC
-    }
-    .burger-menu {
-    background: rgba(255, 255, 255, 0.8); /* Couleur blanche semi-transparente */
     }
     .logo {
         font-size: 3rem;
